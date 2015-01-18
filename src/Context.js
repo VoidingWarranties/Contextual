@@ -35,9 +35,13 @@ function forEverySubContext(context) {
       continue;
     }
     var link = document.getElementById("CONTEXTUAL_" + i + context_url);
-    link.addEventListener('click', function() {
-      chrome.runtime.sendMessage({context_clicked: true});
-    });
+    // Self-invoking anonymous function required to capture the current state in
+    // the for loop.
+    (function(i) {
+      link.addEventListener('click', function() {
+        chrome.runtime.sendMessage({message: "click subcontext", context: context.innerText.split("...")[i]});
+      });
+    })(i);
   }
 }
 

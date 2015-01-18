@@ -1,11 +1,15 @@
 var context_clicked = false;
+var context = "";
 
 // Listens for a message from the injected Context.js to signal that a context
 // link has been clicked. This is asynchronous and causes a data race with the
 // tabs.onUpdated listener. This should be fixed in the future...
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.context_clicked === true) {
+  if (request.message === "click subcontext") {
     context_clicked = true;
+    context = request.context;
+  } else if (request.message === "get context") {
+    sendResponse({context: context});
   }
   return true;
 });
