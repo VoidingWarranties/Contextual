@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "Contextual",
+  "description": "Easily find the relevant context in Google search results",
+  "version": "0.1",
+
+  "background": {
+    "scripts": ["EventPage.js"],
+    "persistent": false
+  },
+
+  "permissions": [
+    "tabs",
+    "*://www.google.com/*"
+  ]
+}
