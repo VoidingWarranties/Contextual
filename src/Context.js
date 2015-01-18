@@ -12,6 +12,11 @@ function getContextURL(context) {
 }
 
 function forEverySubContext(context) {
+  var child = context.querySelector(".f");
+  if (child !== null) {
+    context.removeChild(child);
+  }
+
   var context_url = getContextURL(context);
   var new_innerHTML = "";
   var sub_contexts = context.innerHTML.split("...");
@@ -39,9 +44,13 @@ function forEverySubContext(context) {
     // the for loop.
     (function(i) {
       link.addEventListener('click', function() {
-        chrome.runtime.sendMessage({message: "click subcontext", context: context.innerText.split("...")[i]});
+        chrome.runtime.sendMessage({message: "click subcontext", context: context.getElementsByTagName("a")[0].innerText.split("...")[i]});
       });
     })(i);
+  }
+
+  if (child !== null) {
+    context.insertBefore(child, context.firstChild);
   }
 }
 
