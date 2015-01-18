@@ -14,7 +14,7 @@ chrome.runtime.sendMessage({message: "get context"}, function(response) {
     for (var i = elements.length - 1; i >= 0; --i) {
       if (elements[i].innerText.indexOf(response.context.trim()) !== -1) {
         // Highlight the element.
-        elements[i].style.color = "red";
+        elements[i].style.backgroundColor = "yellow";
         // Scroll to the element.
         elements[i].id = "CONTEXT_FOUND";
         $('#CONTEXT_FOUND').scrollView();
