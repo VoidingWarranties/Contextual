@@ -5,14 +5,21 @@ function getSearchContexts() {
   return document.querySelectorAll(".st");
 }
 
+// Returns the relevant URL for the given context.
+function getContextURL(context) {
+  var header_link = context.parentNode.parentNode.parentNode.querySelector(".r");
+  return header_link.getElementsByTagName("a")[0].href;
+}
+
 function forEverySubContext(context) {
+  var context_url = getContextURL(context);
   var new_innerHTML = "";
   var sub_contexts = context.innerHTML.split("...");
   for (var i = 0; i < sub_contexts.length; ++i) {
     if (sub_contexts[i].length === 0) {
       continue;
     }
-    new_innerHTML += "<a href=\"https://www.google.com\">"; // This URL needs to be changed to the result site's URL.
+    new_innerHTML += "<a href=\"" + context_url + "\">";
     new_innerHTML += sub_contexts[i];
     new_innerHTML += "</a>";
     if (i !== sub_contexts.length - 1 || context.innerHTML.substr(context.innerHTML.length - 3) === "...") {
