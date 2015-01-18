@@ -12,9 +12,9 @@ function getContextURL(context) {
 }
 
 function forEverySubContext(context) {
-  var child = context.querySelector(".f");
-  if (child !== null) {
-    context.removeChild(child);
+  var date_element = context.querySelector(".f");
+  if (date_element !== null) {
+    context.removeChild(date_element);
   }
 
   var context_url = getContextURL(context);
@@ -49,8 +49,8 @@ function forEverySubContext(context) {
     })(i);
   }
 
-  if (child !== null) {
-    context.insertBefore(child, context.firstChild);
+  if (date_element !== null) {
+    context.insertBefore(date_element, context.firstChild);
   }
 }
 
