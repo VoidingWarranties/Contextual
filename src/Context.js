@@ -44,7 +44,7 @@ function forEverySubContext(context) {
     // the for loop.
     (function(i) {
       link.addEventListener('click', function() {
-        chrome.runtime.sendMessage({message: "click subcontext", context: context.getElementsByTagName("a")[0].innerText.split("...")[i]});
+        chrome.runtime.sendMessage({message: "click subcontext", context: context.getElementsByTagName("a")[0].innerText.split("...")[i].replace(/’|'/g, "")});
       });
     })(i);
   }
