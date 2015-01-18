@@ -6,8 +6,15 @@
   "version": "0.1",
 
   "background": {
-    "scripts": ["EventPage.js"]
+    "scripts": ["jquery-2.1.3.min.js", "EventPage.js"]
   },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "js": ["jquery-2.1.3.min.js"]
+    }
+  ],
 
   "permissions": [
     "tabs",

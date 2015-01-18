@@ -1,9 +1,23 @@
+// jQuery function to smoothly scroll to an element by id.
+// Credit goes to http://stackoverflow.com/a/1586379
+$.fn.scrollView = function () {
+    return this.each(function () {
+        $('html, body').animate({
+            scrollTop: $(this).offset().top
+        }, 1000);
+    });
+}
+
 chrome.runtime.sendMessage({message: "get context"}, function(response) {
   if (response.context !== null && response.context.trim() !== "") {
     var elements = document.getElementsByTagName('*');
-    for (var i = 0; i < elements.length; ++i) {
-      if (elements[elements.length - i - 1].innerText.indexOf(response.context.trim()) !== -1) {
-        elements[elements.length - i - 1].style.color = "red";
+    for (var i = elements.length - 1; i >= 0; --i) {
+      if (elements[i].innerText.indexOf(response.context.trim()) !== -1) {
+        // Highlight the element.
+        elements[i].style.color = "red";
+        // Scroll to the element.
+        elements[i].id = "CONTEXT_FOUND";
+        $('#CONTEXT_FOUND').scrollView();
         break;
       }
     }
