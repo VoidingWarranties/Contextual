@@ -6,12 +6,11 @@
   "version": "0.1",
 
   "background": {
-    "scripts": ["EventPage.js"],
-    "persistent": false
+    "scripts": ["EventPage.js"]
   },
 
   "permissions": [
     "tabs",
-    "*://www.google.com/*"
+    "<all_urls>"
   ]
 }

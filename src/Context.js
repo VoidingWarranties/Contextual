@@ -19,7 +19,7 @@ function forEverySubContext(context) {
     if (sub_contexts[i].length === 0) {
       continue;
     }
-    new_innerHTML += "<a href=\"" + context_url + "\">";
+    new_innerHTML += "<a href=\"" + context_url + "\" id=\"CONTEXTUAL_" + i + context_url + "\">";
     new_innerHTML += sub_contexts[i];
     new_innerHTML += "</a>";
     if (i !== sub_contexts.length - 1 || context.innerHTML.substr(context.innerHTML.length - 3) === "...") {
@@ -27,6 +27,18 @@ function forEverySubContext(context) {
     }
   }
   context.innerHTML = new_innerHTML;
+  // Add click handlers for the context links. This must be done this way
+  // because Chrome doesn't allow extensions to inline javascript in the
+  // "onclick" property of an element.
+  for (var i = 0; i < sub_contexts.length; ++i) {
+    if (sub_contexts[i].length === 0) {
+      continue;
+    }
+    var link = document.getElementById("CONTEXTUAL_" + i + context_url);
+    link.addEventListener('click', function() {
+      chrome.runtime.sendMessage({context_clicked: true});
+    });
+  }
 }
 
 var contexts = getSearchContexts();

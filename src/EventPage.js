@@ -1,3 +1,15 @@
+var context_clicked = false;
+
+// Listens for a message from the injected Context.js to signal that a context
+// link has been clicked. This is asynchronous and causes a data race with the
+// tabs.onUpdated listener. This should be fixed in the future...
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.context_clicked === true) {
+    context_clicked = true;
+  }
+  return true;
+});
+
 chrome.tabs.onUpdated.addListener(function(id, info, tab) {
   if (info.status !== "complete") {
     return;
@@ -9,10 +21,19 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab) {
   var parser = document.createElement('a');
   parser.href = tab.url;
 
+  // Context link clicked in search result...
+  // Execute result-side javascript.
+  if (context_clicked) {
+    context_clicked = false;
+    chrome.tabs.executeScript(null, {file: "GoToContext.js"});
+    return;
+  }
+
   if (parser.hostname !== "www.google.com") {
     return;
   }
 
+  // Google search result loaded...
   // Execute Context.js in the context of the current page
   // (which should be a Google search result).
   chrome.tabs.executeScript(null, {file: "Context.js"});
