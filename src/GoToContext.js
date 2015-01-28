@@ -12,9 +12,9 @@ chrome.runtime.sendMessage({message: "get context"}, function(response) {
   if (response.context !== null && response.context.trim() !== "") {
     var elements = document.getElementsByTagName('*');
     for (var i = elements.length - 1; i >= 0; --i) {
-      if (elements[i].innerText.replace(/’|'/g, "").indexOf(response.context.trim()) !== -1) {
+      if (elements[i].innerText.replace(/\W+/g, "").indexOf(response.context.trim()) !== -1) {
         // Highlight the element.
-        elements[i].style.backgroundColor = "yellow";
+        elements[i].innerHTML = "<mark>" + elements[i].innerHTML + "</mark>";
         // Scroll to the element.
         elements[i].id = "CONTEXT_FOUND";
         $('#CONTEXT_FOUND').scrollView();
